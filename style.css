@@ -124,7 +124,7 @@ section {
     margin: 0 0 -15px;
 }
 
-@media (min-width: 576px) {
+@media (max-width: 767px) {
     .container {
         width: 540px;
     }
