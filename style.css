@@ -1,0 +1,183 @@
+
+@media (prefers-reduced-motion: no-preference) {
+    :root {
+      scroll-behavior: smooth;
+    }
+  }
+
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: #727272;
+}
+
+button, .btn {
+    background: #0dce6d;
+    color: #ffffff;
+    border: none;
+    padding: 1rem 2rem;
+}
+.btn {
+    text-decoration-line: none;
+}
+.container {
+    width: 100%;
+    margin: auto;
+    padding: .5rem;
+}
+
+header {
+    box-shadow: 0px -5px 10px 0px #4e4e4e;
+    position: fixed;
+    width: 100%;
+    height: 3rem;
+}
+
+section {
+    height: 96vh;
+    padding-top: 3rem;
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.space-between {
+    justify-content: space-between;
+    align-content: space-between;
+}
+
+.full {
+    height: 100%;
+}
+
+.text-primary {
+    color: #0dce6d;
+}
+.text-center {
+    text-align: center;
+}
+
+.w-2 {
+    width: 2em;
+}
+.w-5 {
+    width: 5em;
+}
+
+.m-q {
+    padding: .25rem;
+}
+
+.px-2 {
+    padding: 0 2rem;
+}
+
+.m-h {
+    margin: .5rem;
+}
+
+.ml-1 {
+    margin-left: 1rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+.mt-5 {
+    margin-top: 5rem;
+}
+
+.card {
+    box-shadow: 0px 2px 8px #bbbbbb;
+    padding: .5rem;
+}
+.label {
+    position: relative;
+    color: #0dce6d;
+    top: -17px;
+    margin: 0 0 -15px;
+}
+
+@media (max-width: 576px) {
+    .container {
+        width: 540px;
+    }
+    .xsm-12 {
+        width: 100%;
+    }    
+}
+@media (min-width: 576px) {
+    .container {
+        width: 540px;
+    }
+    .sm-12 {
+        width: 100%;
+    }
+    .sm-6 {
+        width: 45%;
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        width: 720px;
+    }
+    .md-6 {
+        width: 45%;
+    }
+    .md-4 {
+        width: 30%;
+    }
+}
+@media (min-width: 992px) {
+    .container {
+        width: 960px;
+    }
+    .lg-3 {
+        width: 25%;
+    }
+    .lg-2 {
+        width: 15%;
+    }
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 1140px;
+    }
+    .xl-2 {
+        width: 15%;
+    }
+}
+@media (min-width: 1400px) {
+    .container {
+        width: 1320px;
+    }
+    .xxl-12 {
+        width: 100%;
+    }
+}
