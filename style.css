@@ -76,6 +76,13 @@ section {
     height: 100%;
 }
 
+.gap-5 {
+    gap: .5rem
+}
+.gap-10 {
+    gap: 1rem
+}
+
 .text-primary {
     color: #0dce6d;
 }
@@ -129,7 +136,7 @@ section {
         width: 540px;
     }
     .xsm-12 {
-        width: 100%;
+        flex: 100%;
     }    
 }
 @media (min-width: 576px) {
@@ -137,10 +144,10 @@ section {
         width: 540px;
     }
     .sm-12 {
-        width: 100%;
+        flex: 100%;
     }
     .sm-6 {
-        width: 45%;
+        flex: 45%;
     }
 }
 @media (min-width: 768px) {
@@ -159,10 +166,10 @@ section {
         width: 960px;
     }
     .lg-3 {
-        width: 25%;
+        flex: 25%;
     }
     .lg-2 {
-        width: 15%;
+        flex: 15%;
     }
 }
 @media (min-width: 1200px) {
@@ -170,7 +177,7 @@ section {
         width: 1140px;
     }
     .xl-2 {
-        width: 15%;
+        flex: 15%;
     }
 }
 @media (min-width: 1400px) {
@@ -178,6 +185,35 @@ section {
         width: 1320px;
     }
     .xxl-12 {
-        width: 100%;
+        flex: 100%;
     }
+}
+.bar {
+    background-color: #b7b7b7;
+    width: 80%;
+    height: .6rem;
+    margin: .5rem auto;
+    font-size: x-small;
+    color: #ffffff;
+}
+
+.bar.fill-90 {
+    background: #0dce6d;
+    background: linear-gradient(90deg, #0dce6d 90%, #b7b7b7 90%);
+}
+.bar.fill-85 {
+    background: #0dce6d;
+    background: linear-gradient(90deg, #0dce6d 85%, #b7b7b7 85%);
+}
+.bar.fill-80 {
+    background: #0dce6d;
+    background: linear-gradient(90deg, #0dce6d 80%, #b7b7b7 80%);
+}
+.bar.fill-75 {
+    background: #0dce6d;
+    background: linear-gradient(90deg, #0dce6d 75%, #b7b7b7 75%);
+}
+.bar.fill-60 {
+    background: #0dce6d;
+    background: linear-gradient(90deg, #0dce6d 60%, #b7b7b7 60%);
 }
