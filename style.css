@@ -1,219 +1,100 @@
-
-@media (prefers-reduced-motion: no-preference) {
-    :root {
-      scroll-behavior: smooth;
-    }
-  }
-
 html, body {
     padding: 0;
     margin: 0;
     font-family: 'Josefin Sans', sans-serif;
-}
-
-ul {
-    list-style: none;
+    background-color: #F0F0F0;
 }
 
 a {
     color: #727272;
-}
-
-button, .btn {
-    background: #0dce6d;
-    color: #ffffff;
-    border: none;
-    padding: 1rem 2rem;
-}
-.btn {
-    text-decoration-line: none;
-}
-.container {
-    width: 100%;
-    margin: auto;
-    padding: .5rem;
+    text-decoration: none;
 }
 
 header {
-    box-shadow: 0px -5px 10px 0px #4e4e4e;
-    position: fixed;
-    width: 100%;
-    height: 3rem;
-}
-
-section {
-    height: 96vh;
-    padding-top: 3rem;
-    width: 100%;
-}
-
-.flex {
+    height: 5vh;
+    border-bottom: 1px solid;
+    margin-left: 5vw;
     display: flex;
-}
-.wrap {
-    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 4rem;
+    padding-bottom: 5px;
 }
 
-.col {
+main {
+    width: 90vw;
+    height: 90vh;
+    margin: auto;
+    display: flex;
     flex-direction: column;
-}
-
-.row {
-    flex-direction: row;
-}
-
-.center {
     justify-content: center;
-    align-items: center;
-    align-content: center;
 }
-.space-between {
-    justify-content: space-between;
-    align-content: space-between;
+h1 {
+    font-size: 5rem;
+    margin-bottom: 0;
+    text-wrap: wrap;
 }
-
-.full {
-    height: 100%;
+.text-right {
+    text-align: right;
 }
-
-.gap-5 {
-    gap: .5rem
+.top-border {
+    border-top: 1px solid;
 }
-.gap-10 {
-    gap: 1rem
-}
-
-.text-primary {
-    color: #0dce6d;
-}
-.text-center {
-    text-align: center;
-}
-
 .w-2 {
     width: 2em;
 }
-.w-5 {
-    width: 5em;
+.w-45 {
+    width: 45vw;
 }
 
-.m-q {
-    padding: .25rem;
+footer {
+    border-top: 1px solid;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 50vw;
+    padding-top: 5px;
 }
 
-.px-2 {
-    padding: 0 2rem;
+.text-teal {
+    color: #1dca90;
 }
 
-.m-h {
-    margin: .5rem;
+@media screen and (orientation:portrait) {
+    .w-45 {
+        width: 90vw;
+        margin: auto;
+    }
+    footer {
+        margin-left: 5vw;
+    }
 }
 
-.ml-1 {
-    margin-left: 1rem;
+@keyframes openscale {
+    0% {
+        transform: scale(0, 1);
+    }
+    30% {
+        transform: scale(0.01, 1);
+    }
+    
+    100% {
+        transform: scale(1,1);
+    }
 }
 
-.mt-2 {
-    margin-top: 2rem;
-}
-.mt-5 {
-    margin-top: 5rem;
-}
-
-.card {
-    box-shadow: 0px 2px 8px #bbbbbb;
-    padding: .5rem;
-}
-.label {
-    position: relative;
-    color: #0dce6d;
-    top: -17px;
-    margin: 0 0 -15px;
-}
-
-@media (max-width: 576px) {
-    .container {
-        width: 540px;
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
     }
-    .xsm-12 {
-        flex: 100%;
-    }    
-}
-@media (min-width: 576px) {
-    .container {
-        width: 540px;
+    60% {
+        opacity: 0;
     }
-    .sm-12 {
-        flex: 100%;
-    }
-    .sm-6 {
-        flex: 45%;
+    100% {
+        opacity: 1;
     }
 }
-@media (min-width: 768px) {
-    .container {
-        width: 720px;
-    }
-    .md-6 {
-        width: 45%;
-    }
-    .md-4 {
-        width: 30%;
-    }
+main {
+    animation: 2s cubic-bezier(0.95, 0.05, 0.795, 0.035) 0s 1 openscale;
 }
-@media (min-width: 992px) {
-    .container {
-        width: 960px;
-    }
-    .lg-3 {
-        flex: 25%;
-    }
-    .lg-2 {
-        flex: 15%;
-    }
-}
-@media (min-width: 1200px) {
-    .container {
-        width: 1140px;
-    }
-    .xl-2 {
-        flex: 15%;
-    }
-}
-@media (min-width: 1400px) {
-    .container {
-        width: 1320px;
-    }
-    .xxl-12 {
-        flex: 100%;
-    }
-}
-.bar {
-    background-color: #b7b7b7;
-    width: 80%;
-    height: .6rem;
-    margin: .5rem auto;
-    font-size: x-small;
-    color: #ffffff;
-}
-
-.bar.fill-90 {
-    background: #0dce6d;
-    background: linear-gradient(90deg, #0dce6d 90%, #b7b7b7 90%);
-}
-.bar.fill-85 {
-    background: #0dce6d;
-    background: linear-gradient(90deg, #0dce6d 85%, #b7b7b7 85%);
-}
-.bar.fill-80 {
-    background: #0dce6d;
-    background: linear-gradient(90deg, #0dce6d 80%, #b7b7b7 80%);
-}
-.bar.fill-75 {
-    background: #0dce6d;
-    background: linear-gradient(90deg, #0dce6d 75%, #b7b7b7 75%);
-}
-.bar.fill-60 {
-    background: #0dce6d;
-    background: linear-gradient(90deg, #0dce6d 60%, #b7b7b7 60%);
+.fade-in {
+    animation: 4s ease-in 0s 1 fadeIn;
 }
