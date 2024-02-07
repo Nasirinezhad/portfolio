@@ -1,0 +1,11 @@
+
+@font-face {
+    font-family: 'B Yekan';
+    font-style: normal;
+    font-weight: 100;
+    font-display: swap;
+    src: url(assets/font/BYekan.woff2) format('woff2');
+  }
+html, body {
+    font-family: 'B Yekan' !important;
+}
