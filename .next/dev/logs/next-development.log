@@ -1,0 +1,818 @@
+[00:00:02.482] Server  LOG      ✓ Ready in 1799ms
+[00:00:18.146] Server  LOG      ○ Compiling / ...
+[00:00:23.382] Server  WARN     ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[00:00:23.461] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:23.891] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark">
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           data-new-gr-c-s-check-loaded="14.1267.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[00:04:16.648] Server  LOG      ✓ Compiled in 583ms
+[00:04:23.568] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:24.078] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark">
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           data-new-gr-c-s-check-loaded="14.1267.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[00:04:38.220] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:07:12.911] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:12.912] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:12.971] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:12.971] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:15.898] Server  ERROR    ⨯ ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+
+
+
+./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+
+
+[00:07:16.111] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:16.111] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:16.114] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:16.114] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:17.821] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:17.821] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:17.828] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:17.828] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:18.045] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:18.045] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:18.046] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:18.046] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:20.115] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:20.116] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:20.116] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:20.117] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:21.528] Browser ERROR   uncaughtError: Error: ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+
+
+[00:07:21.673] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:21.673] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:21.776] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:21.776] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:22.024] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:07:22.025] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:11:15.703] Browser ERROR   ./app/ui/ColorBends.tsx:1:17
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                 ^^^^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:11:15.703] Browser ERROR   ./app/ui/ColorBends.tsx:1:28
+Ecmascript file had an error
+> 1 | import React, { useEffect, useRef } from 'react';
+    |                            ^^^^^^
+  2 | import * as THREE from 'three';
+  3 | import './ColorBends.css';
+  4 |
+
+You're importing a component that needs `useRef`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/ui/ColorBends.tsx
+    ./app/page.tsx
+[00:11:17.458] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:39.112] Server  LOG      ✓ Compiled in 226ms
+[00:13:46.821] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:47.329] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark">
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           data-new-gr-c-s-check-loaded="14.1267.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[00:13:53.296] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:14:02.545] Server  LOG      ✓ Compiled in 92ms
+[00:15:49.349] Server  LOG      ✓ Compiled in 227ms
+[00:15:57.532] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:15:57.891] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark">
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           data-new-gr-c-s-check-loaded="14.1267.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[00:16:07.308] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:16:07.631] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark">
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           data-new-gr-c-s-check-loaded="14.1267.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[00:16:36.057] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:16:36.428] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark">
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           data-new-gr-c-s-check-loaded="14.1267.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[00:16:49.202] Server  LOG      ✓ Compiled in 254ms
+[00:16:54.531] Server  LOG      ✓ Compiled in 98ms
+[00:17:03.664] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:17:03.948] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark">
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           data-new-gr-c-s-check-loaded="14.1267.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[00:17:07.945] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:17:08.245] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark">
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           data-new-gr-c-s-check-loaded="14.1267.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+

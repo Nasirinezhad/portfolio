@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///home/ray/workspace/portfolio/app/ui/ColorBends.css"],"sourcesContent":["\n.color-bends-container {\n  position: relative;\n  width: 100%;\n  height: 100vh;\n  overflow: hidden;\n}\n"],"names":[],"mappings":"AACA"}}]
+}
