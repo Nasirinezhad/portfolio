@@ -1,1 +1,371 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ابزار حواله گروهی – پایا، ساتنا، تجارت</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--bg:#eef3f9;--card:#fbfdff;--ink:#14233a;--mut:#5f6f86;--line:#d3dce9;--ac:#1f5fbf;--acx:#fff;--bad:#b3261e;--badbg:#fbe4e1;--ok:#17653f}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1724;--card:#172236;--ink:#e6edf7;--mut:#8fa0b8;--line:#2a3a55;--ac:#6aa8ff;--acx:#0b1526;--bad:#ff8a80;--badbg:#3a1f1c;--ok:#7fd8a6}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.7 Vazirmatn,Tahoma,sans-serif;padding:16px;max-width:1200px;margin-inline:auto}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px;margin-bottom:14px}
+h1{margin:0;font-size:22px;font-weight:800}
+.sum{text-align:left}.sum b{font-size:22px;font-weight:800;color:var(--ac)}.sum small{display:block;color:var(--mut);max-width:420px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+.bar{display:flex;flex-wrap:wrap;gap:8px}
+button,.btn{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 14px;border-radius:8px;cursor:pointer}
+button:hover,.btn:hover{border-color:var(--ac)}
+.pri{background:var(--ac);color:var(--acx);border-color:var(--ac);font-weight:600}
+.set{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:6px 18px}
+.set label{display:flex;gap:8px;align-items:start}
+.set .lim{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.set .lim input{width:150px}
+summary{cursor:pointer;font-weight:600}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:900px}
+th{text-align:right;font-weight:600;color:var(--mut);border-bottom:2px solid var(--line);padding:6px 4px}
+td{border-bottom:1px solid var(--line);padding:2px 3px;vertical-align:middle}
+td input{width:100%;font:inherit;color:inherit;background:transparent;border:1px solid transparent;border-radius:6px;padding:3px 6px}
+td input:focus,.set input[type=number]{border-color:var(--ac);outline:none;background:var(--card)}
+.set input[type=number]{font:inherit;color:inherit;border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.c{color:var(--mut);width:36px;text-align:center}.chk{font-size:12px;min-width:260px}.ty{white-space:nowrap;font-weight:600}
+tr.bad .chk{color:var(--bad);background:var(--badbg);font-weight:600}
+.x{border:0;color:var(--mut);padding:0 8px;font-size:18px}
+#log{list-style:none;margin:0;padding:0}#log li{padding:3px 0;border-bottom:1px dashed var(--line)}#log .bad{color:var(--bad)}#log .ok{color:var(--ok)}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:min(760px,95vw)}
+dialog input{width:100%;font:inherit;color:inherit;background:transparent;border:1px solid var(--line);border-radius:6px;padding:3px 6px}
+.hint{color:var(--mut);font-size:12px;margin:6px 0 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>ابزار حواله گروهی – پایا، ساتنا، تجارت</h1>
+  <div class="sum"><b id="sum">0</b> ریال<small id="sumw"></small></div>
+</header>
 
+<div class="card bar">
+  <button class="pri" id="bExp">ایجاد خروجی</button>
+  <button id="bChk">بررسی</button>
+  <label class="btn">خواندن از فایل (اکسل / CSV / ach.txt)<input type="file" id="file" accept=".xlsx,.xlsm,.xlsb,.xls,.ods,.csv,.tsv,.txt,.dat" hidden></label>
+  <button id="bAdd">+ ردیف</button>
+  <button id="bXls">ذخیره لیست به اکسل</button>
+  <button id="bAcc">حساب‌های ذخیره‌شده (<span id="accN">0</span>)</button>
+  <button id="bClr">پاک کردن لیست</button>
+</div>
+
+<details class="card" open>
+  <summary>تنظیمات</summary>
+  <div class="set" style="margin-top:8px">
+    <label><input type="radio" name="mode" id="opdiv" checked><span>به چندین حواله پایا تقسیم شود</span></label>
+    <label><input type="radio" name="mode" id="oprtgs"><span>فایل ساتنا گروهی ایجاد شود (رکوردهای بیشتر از سقف پایا)</span></label>
+    <label><input type="checkbox" id="minrtgs"><span>مبالغ بین سقف ساتنا تا سقف پایا در فایل ساتنا ایجاد شوند</span></label>
+    <label><input type="checkbox" id="sep" checked><span>حساب‌های تجارت مجزا خروجی گرفته شود</span></label>
+    <label><input type="checkbox" id="save"><span>حساب‌ها برای بررسی‌های آینده ذخیره شوند</span></label>
+    <label><input type="checkbox" id="ign"><span>از خطاها صرف‌نظر کن و در هر حال خروجی را ایجاد کن</span></label>
+    <label><input type="checkbox" id="bom" checked><span>افزودن BOM به فایل‌ها (مطابق خروجی نسخه اکسل)</span></label>
+    <div class="lim">
+      <span>سقف پایا:</span><input type="number" id="limD" value="2000000000">
+      <span>حداقل ساتنا:</span><input type="number" id="limR" value="1000000000">
+    </div>
+  </div>
+  <p class="hint" id="setHint"></p>
+</details>
+
+<div class="card tw">
+  <table>
+    <thead><tr><th>ردیف</th><th>شماره شبا/حساب</th><th>نام و نام خانوادگی</th><th>مبلغ (ریال)</th><th>شناسه واریز</th><th>بررسی</th><th>نوع</th><th></th></tr></thead>
+    <tbody id="tb"></tbody>
+  </table>
+  <p class="hint">می‌توانید چند سطر را مستقیم از اکسل کپی و در جدول Paste کنید. فرمت حساب: شبا ۲۴ رقمی، شماره حساب تجارت (۸ تا ۱۳ رقم)، <bdi>کدبانک/شماره‌حساب</bdi> مثل <bdi>19/105259548004</bdi>، یا <bdi>330190*221138691005</bdi> برای جایگزینی صفرها.</p>
+</div>
+
+<div class="card"><ul id="log"></ul></div>
+
+<dialog id="dlg">
+  <h3 style="margin-top:0">حساب‌های ذخیره‌شده</h3>
+  <div class="tw" style="max-height:55vh"><table id="accT" style="min-width:560px"></table></div>
+  <p class="hint">این لیست فقط در همین مرورگر ذخیره می‌شود و برای هشدار «شبا قبلاً با نام دیگری ثبت شده» استفاده می‌شود.</p>
+  <div class="bar" style="margin-top:8px"><button class="pri" id="dOk">بستن</button><button id="dClr">حذف همه</button></div>
+</dialog>
+
+<script>
+//#CORE
+const BANKS={10:'مرکزی',11:'صنعت معدن',12:'ملت',13:'رفاه',14:'مسکن',15:'سپه',16:'کشاورزی',17:'ملی',18:'تجارت',19:'صادرات',20:'توسعه صادرات',21:'پست بانک',22:'توسعه تعاون',52:'قوامین',53:'کارآفرین',54:'پارسیان',55:'اقتصادنوین',56:'سامان',57:'پاسارگاد',58:'سرمایه',59:'سینا',60:'مهر',61:'شهر',62:'آینده',63:'سپه انصار',64:'گردشگری',65:'سپه حکمت',66:'دی',69:'ایران زمین',70:'رسالت',73:'سپه کوثر',75:'ملل',78:'خاورمیانه',79:'سپه مهر اقتصاد',80:'نور',93:'شاپرک',95:'ایران ونزولا'};
+const T={ach:'پایا',rtgs:'ساتنا',tejarat:'تجارت'};
+const M={
+ InvalidIBAN:'این شماره شبا معتبر نیست',InvalidIBANLength:'طول شماره شبا معتبر نیست، هر شبا شامل دقیقا 24 رقم است',
+ NoPunctuation:'در نام و نام خانوادگی از علایم نگارشی نباید استفاده شود',ShortName:'نام و نام خانوادگی کوتاه است',
+ NoFloat:'مبلغ نمیتواند اعشار داشته باشد',WillNotExport:'مبلغ صفر به فایل خروجی اضافه نخواهد شد',
+ MaxPayID:'حداکثر طول شناسه واریز 30 رقم است',CantDivid:'این دستور شناسه دار است و مبلغ آن بیشتر از حد پایا است نمیتوان به صورت گروهی اجرا شود',
+ WillDivid:'این دستور در ** حواله واریز خواهد شد',FixErrorsFirst:'ابتدا خطاهای موجود را حل کنید **',
+ DiffrentWithLast:'این شبا قبلا به نام  **  ثبت شده است. از صحت نام مطمئن شوید. میتوانید نام را در حساب ها اصلاح کنید',
+ DupDiffrentName:'شبا در همین لیست با نام متفاوت تکرار شده است: ',
+ CountTejLess:'تعداد حساب های طرف تجارت کمتر از 10 مورد است',CountACHLess:'تعداد پایا ها کمتر از 11 مورد است',CountRTGSLess:'تعداد ساتنا ها کمتر از 11 مورد است',
+ NothingToExport:'چیزی برای خروجی گرفتن وجود ندارد!',
+ TotalAmountach:'مجموع مبالغ پایای گروهی',TotalAmounttejarat:'مجموع مبالغ تجارت  گروهی',TotalAmountrtgs:'مجموع مبالغ ساتنای گروهی',
+ RecordsCountach:'تعداد حواله های پایای گروهی',RecordsCounttejarat:'تعداد رکورد های حساب تجارت',RecordsCountrtgs:'تعداد حواله های ساتنای گروهی',
+ NoRTGS:'در این حالت خروجی ساتنا گرفته نمی‌شود و تمامی رکورد های بیش از سقف پایا به چند رکورد با سقف پایا تقسیم خواهند شد.',
+ RTGSInclude:'فایل ساتنای گروهی بر اساس مبالغ رکورد ها ایجاد خواهد شد.',
+ selectedNoRTGS:'شما حالت ساتنای گروهی را انتخاب نکرده اید!',
+ minRTGS:'رکورد های بیشتر از حداقل ساتنا در فایل ساتنا قرار خواهند گرفت',
+ maxRTGS:'رکورد های بیشتر از سقف پایا در فایل ساتنا و کمتر از آن در فایل پایا قرار خواهند گرفت',
+ SepTrans:'شباها و حساب های مقصد بانک تجارت در فایل جداگانه خروجی گرفته می‌شوند',
+ TransInclude:'شباها و حساب های مقصد بانک تجارت همراه سایر بانک ها در یک فایل خروجی گرفته می‌شوند',
+ NamesWillSave:'شبا و نام در این لیست ذخیره خواهند شد تا در استفاده های بعدی مقایسه شوند. امکان استعلام نام صاحب حساب وجود ندارد و این مقایسه صرفا براساس مقادیری است که خودتان وارد کرده اید.',
+ NoSaveNames:'لیست نام و شبا ذخیره نخواهد شد.',
+ IgnoErr:'فایل خروجی با وجود خطا ایجاد خواهد شد. در این صورت ممکن است فایل قابل اجرا نباشد یا موارد خطا دار توسط شعبه عودت شوند.',
+ IncErr:'در صورت وجود خطا در لیست خروجی ایجاد نمی‌شود'};
+const tr=(k,...a)=>{let s=M[k]??k;a.forEach(v=>s=s.replace('**',v));return s};
+
+const D=s=>String(s??'').replace(/[۰-۹]/g,c=>c.charCodeAt(0)-1776).replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632);
+const toNum=s=>{s=D(s).replace(/[,٬\s]/g,'');return s===''||isNaN(+s)?NaN:+s};
+const mod97=s=>{let r=0;for(const c of s)r=(r*10+(+c))%97;return r};
+const pad=(t,n,ch)=>(ch.repeat(n)+t).slice(-n);   // همان رفتار Right(String(n,ch)&text,n) در VBA
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const withCD=s=>('0'+(98-mod97(s+'182700'))+s).slice(-24);
+
+function findIban(ibn,bank){
+  ibn=ibn.replace(/ir/gi,'').replace(/[\s\-']/g,'');
+  return withCD(('0'+bank+'000000000000000000000000').slice(0,Math.max(0,22-ibn.length))+ibn);
+}
+function acc2iban(raw){
+  let s=D(raw).trim().replace(/ir/gi,'').replace(/[\s\-']/g,'');
+  if(s.includes('0*'))s=s.replace('0*','0'.repeat(Math.max(0,26-s.length)));
+  if(s.includes('/')){const i=s.indexOf('/');s=findIban(s.slice(i+1),s.slice(0,i))}
+  if(s.length>=8&&s.length<=13)s=withCD('018000000000000000000000000'.slice(0,22-s.length)+s);
+  else if(s.length!==24)return 'InvalidIBANLength';
+  if(!/^\d+$/.test(s)||mod97(s.slice(2)+'1827'+s.slice(0,2))!==1)return 'InvalidIBAN';
+  return s;
+}
+const bankOf=i=>i.substr(3,2);
+const hasPunct=s=>/[!"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~]/.test(s);
+
+const ONES=['صفر','یک','دو','سه','چهار','پنج','شش','هفت','هشت','نه','ده','یازده','دوازده','سیزده','چهارده','پانزده','شانزده','هفده','هجده','نوزده'],
+ TENS=['','','بیست','سی','چهل','پنجاه','شصت','هفتاد','هشتاد','نود'],
+ HUND=['','یکصد','دویست','سیصد','چهارصد','پانصد','ششصد','هفتصد','هشتصد','نهصد'],
+ SCALE=['','هزار','میلیون','میلیارد','تریلیون','کوادریلیون'];
+function w3(n){const p=[];if(n>=100)p.push(HUND[Math.floor(n/100)]);n%=100;
+  if(n>=20){p.push(TENS[Math.floor(n/10)]);if(n%10)p.push(ONES[n%10])}else if(n>0)p.push(ONES[n]);return p.join(' و ')}
+function words(n){n=Math.round(n);if(n===0)return 'صفر';const neg=n<0;let s=String(Math.abs(n)),g=[];
+  while(s.length){g.unshift(+s.slice(-3));s=s.slice(0,-3)}
+  const p=[];g.forEach((v,i)=>{if(v)p.push(w3(v)+(SCALE[g.length-1-i]?' '+SCALE[g.length-1-i]:''))});
+  return (neg?'منفی ':'')+p.join(' و ')}
+//#ENDCORE
+
+/* ---------- state & settings ---------- */
+const $=s=>document.querySelector(s);
+const E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let rows=[];
+const cfg=()=>({div:$('#opdiv').checked,rtgs:$('#oprtgs').checked,min:$('#minrtgs').checked,sep:$('#sep').checked,save:$('#save').checked,ign:$('#ign').checked,bom:$('#bom').checked,limD:+$('#limD').value||2e9,limR:+$('#limR').value||1e9});
+const getAcc=()=>{try{return JSON.parse(localStorage.getItem('sheba_accounts')||'[]')}catch(e){return[]}};
+const setAcc=a=>{try{localStorage.setItem('sheba_accounts',JSON.stringify(a))}catch(e){log('ذخیره‌سازی مرورگر در دسترس نیست','bad')}$('#accN').textContent=a.length};
+function log(t,c=''){const li=document.createElement('li');li.className=c;li.textContent=t;$('#log').prepend(li)}
+
+/* ---------- row logic ---------- */
+function rowType(r,ibn,S=cfg()){
+  const a=toNum(r.m);
+  if(bankOf(ibn)==='18')return T.tejarat;
+  if(S.div)return T.ach;
+  if((S.min&&a>S.limR)||a>S.limD)return T.rtgs;
+  return T.ach;
+}
+function checkRow(i,ibns,S=cfg()){
+  const r=rows[i],ibn=ibns[i],name=r.n.trim?r.n:String(r.n),amt=toNum(r.m),pid=D(r.p);
+  if(ibn.length!==24)return tr(ibn)+'!';
+  const bank=BANKS[+bankOf(ibn)]||'';
+  if(hasPunct(name))return tr('NoPunctuation')+'!';
+  if(bankOf(ibn)!=='18'&&name.length<6)return tr('ShortName')+'!';
+  if(!Number.isInteger(amt))return tr('NoFloat')+'!';
+  if(amt<1)return tr('WillNotExport');
+  if(pid.length>30)return tr('MaxPayID')+'!';
+  const rt=bankOf(ibn)!=='18'&&S.div&&amt>S.limD;
+  if(pid.length>0&&rt)return tr('CantDivid')+'!';
+  const saved=getAcc().find(x=>x.iban==='IR'+ibn);
+  if(saved&&saved.name&&saved.name!==name)return tr('DiffrentWithLast',saved.name);
+  for(let j=0;j<rows.length;j++)if(j!==i&&ibns[j]===ibn&&rows[j].n&&rows[j].n!==name)return tr('DupDiffrentName')+rows[j].n+'!';
+  let out=`${bank} IR${ibn} ${name}`;
+  if(rt)out+=' '+tr('WillDivid',Math.ceil(amt/S.limD));
+  return out;
+}
+function recalc(){
+  const S=cfg(),ibns=rows.map(r=>acc2iban(r.a)),trs=$('#tb').children;
+  rows.forEach((r,i)=>{const c=checkRow(i,ibns,S);r._c=c;r._t=rowType(r,ibns[i],S);r._i=ibns[i];
+    const el=trs[i];if(!el)return;el.querySelector('.chk').textContent=c;el.querySelector('.ty').textContent=r._t;el.classList.toggle('bad',c.includes('!'))});
+  const sum=rows.reduce((s,r)=>s+(toNum(r.m)||0),0);
+  $('#sum').textContent=fmt(sum);$('#sumw').textContent=sum?words(sum)+' ریال':'';
+}
+function render(){
+  $('#tb').innerHTML=rows.map((r,i)=>`<tr><td class="c">${i+1}</td><td><input data-k="a" dir="ltr" value="${E(r.a)}"></td><td><input data-k="n" value="${E(r.n)}"></td><td><input data-k="m" dir="ltr" inputmode="numeric" value="${E(r.m)}"></td><td><input data-k="p" dir="ltr" value="${E(r.p)}"></td><td class="chk"></td><td class="ty"></td><td><button class="x" data-del title="حذف ردیف">×</button></td></tr>`).join('');
+  recalc();
+}
+const blank=()=>({a:'',n:'',m:'',p:''});
+
+$('#tb').addEventListener('input',e=>{const k=e.target.dataset.k;if(!k)return;rows[e.target.closest('tr').rowIndex-1][k]=e.target.value;recalc()});
+$('#tb').addEventListener('click',e=>{if(e.target.dataset.del!==undefined){rows.splice(e.target.closest('tr').rowIndex-1,1);render()}});
+$('#tb').addEventListener('paste',e=>{
+  const t=(e.clipboardData||window.clipboardData).getData('text');
+  if(!/[\t\n]/.test(t.trim()))return;
+  e.preventDefault();
+  const ks=['a','n','m','p'],tr0=e.target.closest('tr'),i0=tr0.rowIndex-1,c0=Math.max(0,ks.indexOf(e.target.dataset.k));
+  t.replace(/\r/g,'').replace(/\n+$/,'').split('\n').forEach((ln,di)=>{
+    while(rows.length<=i0+di)rows.push(blank());
+    ln.split('\t').forEach((v,dj)=>{if(c0+dj<4)rows[i0+di][ks[c0+dj]]=v.trim()})});
+  render();
+});
+$('#bAdd').onclick=()=>{rows.push(blank());render();$('#tb').lastElementChild.querySelector('input').focus()};
+$('#bClr').onclick=()=>{if(confirm('کل لیست پاک شود؟')){rows=[];render()}};
+
+/* ---------- settings hints ---------- */
+['opdiv','oprtgs','minrtgs','sep','save','ign','limD','limR'].forEach(id=>$('#'+id).addEventListener('change',()=>{
+  let m='';
+  if(id==='opdiv'){$('#minrtgs').checked=false;m=tr('NoRTGS')}
+  else if(id==='oprtgs')m=tr('RTGSInclude');
+  else if(id==='minrtgs'){if($('#opdiv').checked){$('#minrtgs').checked=false;m=tr('selectedNoRTGS')}else m=tr($('#minrtgs').checked?'minRTGS':'maxRTGS')}
+  else if(id==='sep')m=tr($('#sep').checked?'SepTrans':'TransInclude');
+  else if(id==='save')m=tr($('#save').checked?'NamesWillSave':'NoSaveNames');
+  else if(id==='ign')m=tr($('#ign').checked?'IgnoErr':'IncErr');
+  if(m)$('#setHint').textContent=m;recalc()}));
+
+/* ---------- validation ---------- */
+function validate(show=true){
+  const S=cfg();let tej=0,ach=0,rt=0;
+  recalc();
+  for(const r of rows){
+    if(r._c.includes('!')){if(show)log(tr('FixErrorsFirst',r._c),'bad');return 1}
+    const a=toNum(r.m);
+    if(r._t===T.tejarat)tej++;else if(r._t===T.ach)ach+=Math.ceil(a/S.limD);else rt++;
+  }
+  if(show){
+    if(tej>0&&tej<10)log(tr('CountTejLess'),'bad');
+    if(ach>0&&ach<11)log(tr('CountACHLess'),'bad');
+    if(rt>0&&rt<11)log(tr('CountRTGSLess'),'bad');
+    if(!rt&&!ach&&!tej){log(tr('NothingToExport'),'bad');return 1}
+  }
+  let v=1;if(tej>0)v*=2;if(ach>0)v*=3;if(rt>0)v*=5;
+  if(show&&v>1)log('بررسی بدون خطا انجام شد.','ok');
+  return v;
+}
+$('#bChk').onclick=()=>{if(!rows.length)return log(tr('NothingToExport'),'bad');validate(true)};
+
+/* ---------- export ---------- */
+const CRLF='\r\n';
+const line=(ibn,amt,name,pid)=>'IR'+ibn+';'+pad(String(amt),13,'0')+';0000000000000;'+pad(String(name),30,' ')+';'+pad(D(pid),30,' ');
+function writeRec(ibn,amt,name,pid,S){
+  if(!S.ign){
+    if(!S.div&&amt>S.limD)return '';
+    if(S.min&&amt>=S.limR)return '';
+    if(S.sep&&bankOf(ibn)==='18')return '';
+  }
+  let o='';
+  if(bankOf(ibn)!=='18')while(amt>S.limD){o+=line(ibn,S.limD,name,pid)+CRLF;amt-=S.limD}
+  if(amt>0)o+=line(ibn,amt,name,pid)+CRLF;
+  return o;
+}
+function download(name,text,bom){
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([(bom?'\uFEFF':'')+text],{type:'text/plain;charset=utf-8'}));
+  a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+function makeFile(match){
+  const S=cfg();let c='',cv='',total=0,n=0;
+  rows.forEach(r=>{
+    const amt=toNum(r.m),ibn=r._i;
+    if(!(match==='ach'||r._t===T[match]))return;
+    if(!(amt>0))return;                       // مبلغ صفر وارد خروجی نمی‌شود
+    if(match==='rtgs'){c+=line(ibn,amt,r.n,r.p)+CRLF;total+=amt;n++}
+    else if(match==='tejarat'){
+      const p=D(r.p);
+      if(p.length)cv+=ibn.slice(-13)+pad(String(amt),13,'0')+pad(p,17,'0')+CRLF;
+      else c+=ibn.slice(-13)+pad(String(amt),13,'0')+'050101'+CRLF;
+      total+=amt;n++;
+    }else{const k=writeRec(ibn,amt,r.n,r.p,S);if(k){c+=k;total+=amt;n++}}
+  });
+  c=(match==='tejarat'?pad(String(total),26,'0')+'050105':pad(String(total),34,'0')+'040404')+CRLF+c;
+  log(tr('TotalAmount'+match)+': '+fmt(total)+' ریال — '+words(total),'ok');
+  log(tr('RecordsCount'+match)+': '+fmt(n),'ok');
+  const nm={ach:'ach.txt',rtgs:'rtgs.txt',tejarat:'trans.dat'}[match];
+  download(nm,c,S.bom);
+  if(cv.length)setTimeout(()=>download('trans-payid.dat',cv,S.bom),400);
+}
+function exportAll(){
+  if(!rows.length)return log(tr('NothingToExport'),'bad');
+  const S=cfg();
+  if(S.ign){recalc();makeFile('ach')}
+  else{
+    const v=validate(true);if(v===1)return;
+    if(v%3===0)makeFile('ach');
+    if(S.rtgs&&v%5===0)setTimeout(()=>makeFile('rtgs'),200);
+    if(v%2===0&&(S.sep||v%3!==0))setTimeout(()=>makeFile('tejarat'),600);
+  }
+  if(S.save){
+    const a=getAcc();
+    rows.forEach(r=>{if(r._i.length===24&&!a.some(x=>x.iban==='IR'+r._i))a.push({iban:'IR'+r._i,name:r.n})});
+    setAcc(a);
+  }
+}
+$('#bExp').onclick=exportAll;
+
+/* ---------- import ---------- */
+function parseAch(txt){
+  const L=txt.replace(/^\uFEFF/,'').split(/\r?\n/);let n=0;
+  for(let i=1;i<L.length;i++){
+    if(!L[i].trim())continue;const p=L[i].split(';');
+    if(p.length>=4){rows.push({a:p[0].trim(),m:String(Number(p[1])||0),p:(Number(p[4])>0?p[4].trim():''),n:p[3].trim()});n++}
+  }
+  return n;
+}
+function parseSheet(A){
+  const pats={a:/شبا|حساب|iban|account|sheba/i,n:/نام|name/i,m:/مبلغ|amount|ریال/i,p:/شناسه|واریز|pay|id/i};
+  let map=null,start=0;
+  for(let i=0;i<Math.min(A.length,15)&&!map;i++){
+    const m={},used=new Set();
+    for(const k of ['a','n','m','p'])A[i].forEach((c,j)=>{if(m[k]===undefined&&!used.has(j)&&typeof c==='string'&&pats[k].test(c)){m[k]=j;used.add(j)}});
+    if(Object.keys(m).length>=2&&m.a!==undefined){map=m;start=i+1}
+  }
+  if(!map){map={a:0,n:1,m:2,p:3};if(A[0]&&isNaN(toNum(A[0][2])))start=1}
+  let n=0;
+  for(let i=start;i<A.length;i++){
+    const g=k=>map[k]===undefined?'':String(A[i][map[k]]??'').trim();
+    const r={a:g('a'),n:g('n'),m:g('m').replace(/[,٬\s]/g,''),p:g('p')};
+    if(!r.a&&!r.m)continue;rows.push(r);n++;
+  }
+  return n;
+}
+$('#file').onchange=async e=>{
+  const f=e.target.files[0];if(!f)return;e.target.value='';
+  const ext=f.name.split('.').pop().toLowerCase();let n=0;
+  try{
+    if(ext==='txt'||ext==='dat')n=parseAch(await f.text());
+    else{
+      if(typeof XLSX==='undefined')return log('کتابخانه خواندن اکسل بارگذاری نشد؛ اتصال اینترنت را بررسی کنید.','bad');
+      const wb=(ext==='csv'||ext==='tsv')?XLSX.read(await f.text(),{type:'string'}):XLSX.read(await f.arrayBuffer(),{type:'array'});
+      n=parseSheet(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:true,defval:''}));
+    }
+    log(`فایل به انتهای لیست اضافه شد (${n} رکورد)`,'ok');render();
+  }catch(err){log('خواندن فایل با خطا مواجه شد: '+err.message,'bad')}
+};
+$('#bXls').onclick=()=>{
+  if(typeof XLSX==='undefined')return log('کتابخانه اکسل بارگذاری نشد.','bad');
+  const A=[['ردیف','شماره شبا/حساب','نام و نام خانوادگی','مبلغ(ریال)','شناسه واریز','بررسی','نوع']];
+  rows.forEach((r,i)=>A.push([i+1,r.a,r.n,toNum(r.m)||0,r.p,r._c,r._t]));
+  const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(A);ws['!cols']=[{wch:6},{wch:30},{wch:26},{wch:16},{wch:20},{wch:60},{wch:8}];
+  XLSX.utils.book_append_sheet(wb,ws,'لیست');XLSX.writeFile(wb,'batch-list.xlsx');
+};
+
+/* ---------- saved accounts ---------- */
+function drawAcc(){
+  const a=getAcc();
+  $('#accT').innerHTML='<tr><th>شبا</th><th>نام</th><th></th></tr>'+(a.map((x,i)=>`<tr><td dir="ltr">${E(x.iban)}</td><td><input data-i="${i}" value="${E(x.name)}"></td><td><button class="x" data-d="${i}">×</button></td></tr>`).join('')||'<tr><td colspan="3" class="hint">خالی است</td></tr>');
+}
+$('#bAcc').onclick=()=>{drawAcc();$('#dlg').showModal()};
+$('#accT').addEventListener('input',e=>{if(e.target.dataset.i===undefined)return;const a=getAcc();a[e.target.dataset.i].name=e.target.value;setAcc(a)});
+$('#accT').addEventListener('click',e=>{if(e.target.dataset.d===undefined)return;const a=getAcc();a.splice(e.target.dataset.d,1);setAcc(a);drawAcc()});
+$('#dOk').onclick=()=>{$('#dlg').close();recalc()};
+$('#dClr').onclick=()=>{if(confirm('همه حساب‌های ذخیره‌شده حذف شود؟')){setAcc([]);drawAcc()}};
+
+/* ---------- init ---------- */
+setAcc(getAcc());rows=[blank(),blank(),blank()];render();
+</script>
+</body>
+</html>
