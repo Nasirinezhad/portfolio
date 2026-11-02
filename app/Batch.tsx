@@ -336,6 +336,7 @@ export default function Batch() {
           <label><input type="checkbox" checked={S.bom} onChange={(e) => change('bom', e.target.checked)} /><span>افزودن BOM به فایل‌ها (مطابق خروجی نسخه اکسل)</span></label>
           <div className="lim">
             <span>سقف پایا:</span><input type="number" value={S.limD} onChange={(e) => change('limD', +e.target.value || 2e9)} />
+          </div><div className="lim">
             <span>حداقل ساتنا:</span><input type="number" value={S.limR} onChange={(e) => change('limR', +e.target.value || 1e9)} />
           </div>
         </div>
