@@ -138,12 +138,21 @@ function download(name: string, text: string, bom: boolean) {
 
 /* ================= import helpers ================= */
 function parseAch(txt: string, out: Row[]) {
-  const L = txt.replace(/^\uFEFF/, '').split(/\r?\n/);
+  const L = txt.replace(/^\uFEFF/, '').split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
   let n = 0;
-  for (let i = 1; i < L.length; i++) {
-    if (!L[i].trim()) continue;
-    const p = L[i].split(';');
-    if (p.length >= 4) { out.push({ a: p[0].trim(), m: String(Number(p[1]) || 0), p: Number(p[4]) > 0 ? p[4].trim() : '', n: p[3].trim() }); n++; }
+  if (L.some((l) => l.includes(';'))) { // فایل پایا / ساتنا
+    for (let i = 1; i < L.length; i++) {
+      const p = L[i].split(';');
+      if (p.length >= 4) { out.push({ a: p[0].trim(), m: String(Number(p[1]) || 0), p: Number(p[4]) > 0 ? p[4].trim() : '', n: p[3].trim() }); n++; }
+    }
+    return n;
+  }
+  for (const l of L) { // فایل تجارت (trans.dat / trans-payid.dat)
+    if (l.length === 32 && l.endsWith('050105')) continue; // سطر هدر
+    if (l.length < 32) continue;
+    const rest = l.slice(26);
+    out.push({ a: l.slice(0, 13), n: '', m: String(Number(l.slice(13, 26)) || 0), p: rest === '050101' ? '' : rest.replace(/^0+/, '') });
+    n++;
   }
   return n;
 }
@@ -278,21 +287,22 @@ export default function Batch() {
   }
 
   async function onFile(e: ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0];
+    const fs = Array.from(e.target.files ?? []);
     e.target.value = '';
-    if (!f) return;
-    const ext = f.name.split('.').pop()!.toLowerCase();
     const out: Row[] = [];
-    try {
-      let n = 0;
-      if (ext === 'txt' || ext === 'dat') n = parseAch(await f.text(), out);
-      else {
-        const wb = ext === 'csv' || ext === 'tsv' ? XLSX.read(await f.text(), { type: 'string' }) : XLSX.read(await f.arrayBuffer(), { type: 'array' });
-        n = parseSheet(XLSX.utils.sheet_to_json<unknown[]>(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: '' }), out);
-      }
-      setRows((rs) => [...rs.filter((r) => r.a || r.m || r.n), ...out]);
-      log(`فایل به انتهای لیست اضافه شد (${n} رکورد)`, 'ok');
-    } catch (err) { log('خواندن فایل با خطا مواجه شد: ' + (err as Error).message, 'bad'); }
+    for (const f of fs) {
+      const ext = f.name.split('.').pop()!.toLowerCase();
+      try {
+        let n = 0;
+        if (ext === 'txt' || ext === 'dat') n = parseAch(await f.text(), out);
+        else {
+          const wb = ext === 'csv' || ext === 'tsv' ? XLSX.read(await f.text(), { type: 'string' }) : XLSX.read(await f.arrayBuffer(), { type: 'array' });
+          n = parseSheet(XLSX.utils.sheet_to_json<unknown[]>(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: '' }), out);
+        }
+        log(`${f.name}: ${n} رکورد به انتهای لیست اضافه شد`, 'ok');
+      } catch (err) { log(f.name + ': خواندن فایل با خطا مواجه شد: ' + (err as Error).message, 'bad'); }
+    }
+    setRows((rs) => [...rs.filter((r) => r.a || r.m || r.n), ...out]);
   }
 
   function saveXlsx() {
@@ -315,8 +325,8 @@ export default function Batch() {
       <div className="card bar">
         <button className="pri" onClick={exportAll}>ایجاد خروجی</button>
         <button onClick={() => (rows.length ? validate(true) : log(tr('NothingToExport'), 'bad'))}>بررسی</button>
-        <label className="btn">خواندن از فایل (اکسل / CSV / ach.txt)
-          <input type="file" hidden accept=".xlsx,.xlsm,.xlsb,.xls,.ods,.csv,.tsv,.txt,.dat" onChange={onFile} />
+        <label className="btn">خواندن از فایل (اکسل / CSV / ach.txt / trans.dat)
+          <input type="file" hidden accept=".xlsx,.xlsm,.xlsb,.xls,.ods,.csv,.tsv,.txt,.dat" multiple onChange={onFile} />
         </label>
         <button onClick={() => setRows((r) => [...r, blank()])}>+ ردیف</button>
         <button onClick={saveXlsx}>ذخیره لیست به اکسل</button>
@@ -336,7 +346,6 @@ export default function Batch() {
           <label><input type="checkbox" checked={S.bom} onChange={(e) => change('bom', e.target.checked)} /><span>افزودن BOM به فایل‌ها (مطابق خروجی نسخه اکسل)</span></label>
           <div className="lim">
             <span>سقف پایا:</span><input type="number" value={S.limD} onChange={(e) => change('limD', +e.target.value || 2e9)} />
-          </div><div className="lim">
             <span>حداقل ساتنا:</span><input type="number" value={S.limR} onChange={(e) => change('limR', +e.target.value || 1e9)} />
           </div>
         </div>
