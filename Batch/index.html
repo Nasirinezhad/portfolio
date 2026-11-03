@@ -49,7 +49,7 @@ dialog input{width:100%;font:inherit;color:inherit;background:transparent;border
 <div class="card bar">
   <button class="pri" id="bExp">ایجاد خروجی</button>
   <button id="bChk">بررسی</button>
-  <label class="btn">خواندن از فایل (اکسل / CSV / ach.txt)<input type="file" id="file" accept=".xlsx,.xlsm,.xlsb,.xls,.ods,.csv,.tsv,.txt,.dat" hidden></label>
+  <label class="btn">خواندن از فایل (اکسل / CSV / ach.txt / trans.dat)<input type="file" id="file" accept=".xlsx,.xlsm,.xlsb,.xls,.ods,.csv,.tsv,.txt,.dat" multiple hidden></label>
   <button id="bAdd">+ ردیف</button>
   <button id="bXls">ذخیره لیست به اکسل</button>
   <button id="bAcc">حساب‌های ذخیره‌شده (<span id="accN">0</span>)</button>
@@ -68,7 +68,6 @@ dialog input{width:100%;font:inherit;color:inherit;background:transparent;border
     <label><input type="checkbox" id="bom" checked><span>افزودن BOM به فایل‌ها (مطابق خروجی نسخه اکسل)</span></label>
     <div class="lim">
       <span>سقف پایا:</span><input type="number" id="limD" value="2000000000">
-    </div><div class="lim">
       <span>حداقل ساتنا:</span><input type="number" id="limR" value="1000000000">
     </div>
   </div>
@@ -309,10 +308,17 @@ $('#bExp').onclick=exportAll;
 
 /* ---------- import ---------- */
 function parseAch(txt){
-  const L=txt.replace(/^\uFEFF/,'').split(/\r?\n/);let n=0;
-  for(let i=1;i<L.length;i++){
-    if(!L[i].trim())continue;const p=L[i].split(';');
-    if(p.length>=4){rows.push({a:p[0].trim(),m:String(Number(p[1])||0),p:(Number(p[4])>0?p[4].trim():''),n:p[3].trim()});n++}
+  const L=txt.replace(/^\uFEFF/,'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);let n=0;
+  if(L.some(l=>l.includes(';'))){            // فایل پایا / ساتنا
+    for(let i=1;i<L.length;i++){const p=L[i].split(';');
+      if(p.length>=4){rows.push({a:p[0].trim(),m:String(Number(p[1])||0),p:(Number(p[4])>0?p[4].trim():''),n:p[3].trim()});n++}}
+    return n;
+  }
+  for(const l of L){                          // فایل تجارت (trans.dat / trans-payid.dat)
+    if(l.length===32&&l.endsWith('050105'))continue;   // سطر هدر
+    if(l.length<32)continue;
+    const rest=l.slice(26);
+    rows.push({a:l.slice(0,13),n:'',m:String(Number(l.slice(13,26))||0),p:rest==='050101'?'':rest.replace(/^0+/,'')});n++;
   }
   return n;
 }
@@ -334,17 +340,20 @@ function parseSheet(A){
   return n;
 }
 $('#file').onchange=async e=>{
-  const f=e.target.files[0];if(!f)return;e.target.value='';
-  const ext=f.name.split('.').pop().toLowerCase();let n=0;
-  try{
-    if(ext==='txt'||ext==='dat')n=parseAch(await f.text());
-    else{
-      if(typeof XLSX==='undefined')return log('کتابخانه خواندن اکسل بارگذاری نشد؛ اتصال اینترنت را بررسی کنید.','bad');
-      const wb=(ext==='csv'||ext==='tsv')?XLSX.read(await f.text(),{type:'string'}):XLSX.read(await f.arrayBuffer(),{type:'array'});
-      n=parseSheet(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:true,defval:''}));
-    }
-    log(`فایل به انتهای لیست اضافه شد (${n} رکورد)`,'ok');render();
-  }catch(err){log('خواندن فایل با خطا مواجه شد: '+err.message,'bad')}
+  const fs=[...e.target.files];e.target.value='';
+  for(const f of fs){
+    const ext=f.name.split('.').pop().toLowerCase();let n=0;
+    try{
+      if(ext==='txt'||ext==='dat')n=parseAch(await f.text());
+      else{
+        if(typeof XLSX==='undefined'){log('کتابخانه خواندن اکسل بارگذاری نشد؛ اتصال اینترنت را بررسی کنید.','bad');continue}
+        const wb=(ext==='csv'||ext==='tsv')?XLSX.read(await f.text(),{type:'string'}):XLSX.read(await f.arrayBuffer(),{type:'array'});
+        n=parseSheet(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:true,defval:''}));
+      }
+      log(`${f.name}: ${n} رکورد به انتهای لیست اضافه شد`,'ok');
+    }catch(err){log(f.name+': خواندن فایل با خطا مواجه شد: '+err.message,'bad')}
+  }
+  rows=rows.filter(r=>r.a||r.m||r.n);render();
 };
 $('#bXls').onclick=()=>{
   if(typeof XLSX==='undefined')return log('کتابخانه اکسل بارگذاری نشد.','bad');
