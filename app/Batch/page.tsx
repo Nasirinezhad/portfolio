@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState, type ChangeEvent, type ClipboardEvent } from 'react';
 import * as XLSX from 'xlsx';
 
